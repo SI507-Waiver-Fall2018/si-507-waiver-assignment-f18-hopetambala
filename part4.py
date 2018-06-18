@@ -1,3 +1,7 @@
+'''
+Hope Tambala
+25677464
+'''
 # Imports -- you may add others but do not need to
 import plotly.plotly as py
 import plotly.graph_objs as go
