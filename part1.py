@@ -12,10 +12,6 @@ import sys
 from part1_funcs import *
 
 
-from nltk.tokenize import sent_tokenize, word_tokenize
-
-
-
 # write your code here
 # usage should be python3 part1.py <username> <num_tweets>
 
@@ -69,6 +65,8 @@ new_tweets = api.user_timeline(screen_name = screen_name, count = number2analyze
 
 print_username(user);
 tweets_analyzed(user);
+
+pos_tagger(return_tokenize(store_tweet_text(new_tweets)));
 
 '''
 for status in tweepy.Cursor(api.home_timeline).items(10):
