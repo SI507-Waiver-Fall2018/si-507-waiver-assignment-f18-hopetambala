@@ -29,7 +29,7 @@ api = tweepy.API(auth)
 
 # Params
 screen_name = 'tRUbLU911'
-number2analyze = 5
+number2analyze = 100
 
 
 #---*
@@ -40,13 +40,86 @@ def print_username(user):
     print ('UMSI: '+ user.screen_name);
 def tweets_analyzed(user):
     print ('TWEETS ANALYZED: ' + str(user.statuses_count));
-def verbs(tweets):
-    tweetsArray = store_tweet_text(tweets); 
-    print (tweetsArray)
-def nouns():
-    print
-def adjectives():
-    print
+def verbs(tagged):
+    arr5 = []
+
+    word_tag_fd = FreqDist(tagged)
+    for word, frequency in word_tag_fd.most_common():
+        #print(u'{}({})'.format(word[0], frequency))
+        if word[1] =='VB':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='VBD':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='VBN':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='VBP':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='VBG':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='VBZ':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+
+   
+    '''
+    #Works for just listing verbs
+    print ([wt[0] for (wt, freq) in word_tag_fd.most_common() if wt[1] == 'VB'])
+    '''
+
+    '''
+    #Works for Entire list
+    for word, frequency in word_tag_fd.most_common(5):
+        #print(u'{}({})'.format(word[0], frequency))
+        miniString = u'{}({})'.format(word[0], frequency) + ' '
+        stringOf5 += miniString
+    '''
+    #print ('VERBS: ' + str(arr5[:5]))
+    print ('VERBS: ' + ''.join(arr5[:5]))
+
+def nouns(tagged):
+    arr5 = []
+
+    word_tag_fd = FreqDist(tagged)
+    for word, frequency in word_tag_fd.most_common():
+        #print(u'{}({})'.format(word[0], frequency))
+        if word[1] =='NN':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='NNS':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='NNP':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='NNPS':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+
+    print ('NOUNS: ' + ''.join(arr5[:5]))
+
+
+def adjectives(tagged):
+    arr5 = []
+
+    word_tag_fd = FreqDist(tagged)
+    for word, frequency in word_tag_fd.most_common():
+        #print(u'{}({})'.format(word[0], frequency))
+        if word[1] =='JJ':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='JJR':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+        elif word[1] =='JJS':
+            miniString = u'{}({})'.format(word[0], frequency) + ' '
+            arr5.append(miniString)
+
+    print ('ADJECTIVES ' + ''.join(arr5[:5]))
 def original_tweets():
     print
 def times_favorited():
@@ -62,23 +135,10 @@ https://stackoverflow.com/questions/42705314/getting-full-tweet-text-from-user-t
 new_tweets = api.user_timeline(screen_name = screen_name, count = number2analyze, tweet_mode="extended")
 
 
-
+#Main
 print_username(user);
 tweets_analyzed(user);
 
-pos_tagger(return_tokenize(store_tweet_text(new_tweets)));
-
-'''
-for status in tweepy.Cursor(api.home_timeline).items(10):
-    # Process a single status
-    print(status.text)
-'''
-'''
-print (user.followers_count);
-for friend in user.friends():
-   print (friend.screen_name);
-
-public_tweets = api.home_timeline()
-for tweet in public_tweets:
-    print(tweet.text)
-'''
+verbs(pos_tagger(return_tokenize(store_tweet_text(new_tweets))));
+nouns(pos_tagger(return_tokenize(store_tweet_text(new_tweets))));
+adjectives(pos_tagger(return_tokenize(store_tweet_text(new_tweets))));
