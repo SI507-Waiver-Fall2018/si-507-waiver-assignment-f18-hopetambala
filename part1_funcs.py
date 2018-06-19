@@ -8,6 +8,7 @@ import tweepy
 import nltk
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
+from nltk import FreqDist
 
 import json
 import sys
@@ -34,11 +35,20 @@ def store_tweet_text(new_tweets):
 def return_tokenize(data):
     #tokens = data
     stopWords = set(stopwords.words('english'))
-    newStopWords = ['http', 'https','RT',';','.',':','!','+',',','?','/','$','#']
+    newStopWords = ['http', 'https','RT',';','.',':','!','+',',','?','/','$','#','@','``','...']
     stopWords.update(newStopWords)  
 
 
     tokens = word_tokenize(data)
+
+    # Remove single-character tokens (mostly punctuation)
+    tokens = [word for word in tokens if len(word) > 1]
+
+    # Remove numbers
+    tokens = [word for word in tokens if not word.isnumeric()]
+
+    tokens = [word for word in tokens if word[0].isalpha()]
+    
 
     #Array of Filtered Worlds
     filteredWords = []
@@ -52,4 +62,15 @@ def return_tokenize(data):
 def pos_tagger(tokens):
     #tagged = tokens
     tagged = nltk.pos_tag(tokens)
-    print (tagged)
+    
+    #print (tagged)
+    return tagged   
+    '''
+    fdist = FreqDist(tagged)
+    return fdist
+    '''
+    '''
+    for word, frequency in fdist.most_common(5):
+        #print(u'{};{}'.format(word, frequency))
+        print(word,frequency)
+    '''    
