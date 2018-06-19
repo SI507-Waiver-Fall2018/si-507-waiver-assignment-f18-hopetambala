@@ -7,6 +7,8 @@ Hope Tambala
 import sys
 import sqlite3
 
+import pandas as pd
+
 # write your code here
 # usage should be 
 #  python3 part2.py customers
@@ -21,3 +23,46 @@ sqlite_file = 'Northwind_small.sqlite'
 conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
 
+def customers(c):
+    c.execute("SELECT Id,CompanyName FROM Customer")
+ 
+    rows = c.fetchall()
+    
+    for row in rows:
+        print(str(row))
+
+def employees(c):
+    
+    c.execute("SELECT Id,FirstName,LastName FROM Employee")
+ 
+    rows = c.fetchall()
+    
+    for row in rows:
+        print(str(row))
+
+def ordersCustomers(c, customerID):
+    #c.execute("SELECT OrderId FROM OrderDetail WHERE ProductId=" + str(t))
+    c.execute("SELECT OrderDate FROM 'Order' WHERE CustomerId=?",(customerID,))
+ 
+    rows = c.fetchall()
+    
+    for row in rows:
+        print(str(row))
+
+def ordersEmployees(c,employeeID):
+    c.execute("SELECT OrderDate FROM 'Order' WHERE EmployeeId=?",(employeeID,))
+ 
+    rows = c.fetchall()
+    
+    for row in rows:
+        print(str(row))
+
+
+
+customers(c);
+
+employees(c);
+
+string = 'HANAR'
+ordersCustomers(c,string);
+ordersEmployees(c,2);
