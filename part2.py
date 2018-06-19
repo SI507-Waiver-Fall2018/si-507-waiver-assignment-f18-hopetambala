@@ -14,3 +14,10 @@ import sqlite3
 #  python3 part2.py orders cust=<customer id>
 #  python3 part2.py orders emp=<employee last name>
 
+sqlite_file = 'Northwind_small.sqlite'
+
+
+# Connecting to the database file
+conn = sqlite3.connect(sqlite_file)
+c = conn.cursor()
+

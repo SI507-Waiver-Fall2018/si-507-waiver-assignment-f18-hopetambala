@@ -8,6 +8,7 @@ import tweepy
 import nltk
 import json
 import sys
+import csv
 
 from part1_funcs import *
 
@@ -28,6 +29,11 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 # Params
+'''
+screen_name = sys.argv[1]
+number2analyze = int(sys.argv[2])
+
+'''
 screen_name = 'tRUbLU911'
 number2analyze = 100
 
@@ -99,9 +105,18 @@ def nouns(tagged):
         elif word[1] =='NNPS':
             miniString = u'{}({})'.format(word[0], frequency) + ' '
             arr5.append(miniString)
+    
 
     print ('NOUNS: ' + ''.join(arr5[:5]))
 
+    '''
+    nounFile = arr5
+    nounFile.insert(0, ("Noun", "Number"))
+    zeFile = open('noun_data.csv', 'w')
+    with zeFile:
+        writer = csv.writer(zeFile)
+        writer.writerows(nounFile)
+    '''
 
 def adjectives(tagged):
     arr5 = []
@@ -126,6 +141,10 @@ def times_favorited():
     print
 def times_retweeted():
     print
+
+def write2file(nouns):
+    print
+
 
 
 '''
