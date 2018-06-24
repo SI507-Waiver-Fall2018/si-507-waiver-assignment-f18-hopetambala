@@ -86,7 +86,6 @@ def verbs(tagged):
     '''
     #print ('VERBS: ' + str(arr5[:5]))
     print ('VERBS: ' + ''.join(arr5[:5]))
-
 def nouns(tagged):
     arr5 = []
 
@@ -109,14 +108,17 @@ def nouns(tagged):
 
     print ('NOUNS: ' + ''.join(arr5[:5]))
 
-    '''
+    
     nounFile = arr5
     nounFile.insert(0, ("Noun", "Number"))
-    zeFile = open('noun_data.csv', 'w')
-    with zeFile:
-        writer = csv.writer(zeFile)
+    file2write2 = open('noun_data.csv', 'w')
+    with file2write2:
+        writer = csv.writer(file2write2)
+        '''
         writer.writerows(nounFile)
-    '''
+        '''
+        for val in nounFile:
+            writer.writerow([val])
 
 def adjectives(tagged):
     arr5 = []
@@ -135,22 +137,18 @@ def adjectives(tagged):
             arr5.append(miniString)
 
     print ('ADJECTIVES ' + ''.join(arr5[:5]))
+
+'''
 def original_tweets():
     print
 def times_favorited():
     print
 def times_retweeted():
     print
-
 def write2file(nouns):
     print
-
-
-
 '''
-Source
-https://stackoverflow.com/questions/42705314/getting-full-tweet-text-from-user-timeline-with-tweepy
-'''
+
 new_tweets = api.user_timeline(screen_name = screen_name, count = number2analyze, tweet_mode="extended")
 
 
